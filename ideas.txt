@@ -1,0 +1,21 @@
+Use a GP
+Use test data to validate the model
+Lag times not necessary for monthly data
+Use rainfall anomalies instead of raw data
+Ignore leap days
+Separate by season
+Maybe include arctic oscillation and ENSO
+
+Spatial GP model: we have an individual "residual" GP for each gridpoint that uses an RBF kernel over the time domain
+(so that precipitation is a smoothly changing function of time). In addition, we use a learnable mean function.
+For this mean function, we use another GP: an RBF kernel over the spatial domain.
+This procedure we do twice, for summer and winter. OR: we model the seasonality, too.
+For this, we learn a very simple function of the months with a broad, fixed lengthscale, to model the changing impact in summer/winter.
+
+other idea: use a smoothly changing GP to model both spatial and seasonal effect: spatial matern kernel + 12 month periodic kernel over month input
+
+simpler idea if we're not interested in predicting anyway, but rather evaluating the model on arbitrary points in between:
+use a GP with Matern52(time) and add a linear mean which can depend on the month (for every month, we have a different linear coefficient).
+
+moving window correlations
+https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2008JD010382
